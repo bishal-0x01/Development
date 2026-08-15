@@ -1,0 +1,28 @@
+services:
+  product-db:
+    image: postgres
+    container_name: product-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: product-db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - product-db-data:/var/lib/postgresql
+    networks:
+      - myNetwork
+  product-service:
+    image: bishal0x01/product-service
+    container_name: product-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - product-db
+    networks:
+      - myNetwork
+volumes:
+  product-db-data:
+networks:
+  myNetwork:
+  
