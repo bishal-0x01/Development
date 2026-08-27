@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg18-trixie
+    container_name: my-vector-db
+
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: my-test-db
+
+    ports:
+      - "5434:5432"
+
+    volumes:
+      - /Users/bishal/Documents/LearnHub/Development/springAI/data:/var/lib/postgresql
+
+    restart: unless-stopped

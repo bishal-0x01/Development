@@ -39,7 +39,7 @@ public class AIServiceTest {
 
     @Test
     public void testSimilaritySearch(){
-        var res =  aiService.similaritySearch("big text.");
+        var res =  aiService.similaritySearch("Apple");
         for(var doc: res){
             System.out.println(doc);
         }
