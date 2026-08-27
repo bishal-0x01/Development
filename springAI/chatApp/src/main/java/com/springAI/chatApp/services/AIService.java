@@ -1,19 +1,30 @@
 package com.springAI.chatApp.services;
 
+
 import com.springAI.chatApp.dto.Joke;
+import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.prompt.PromptTemplate;
+import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class AIService {
 
     @Autowired
     private ChatClient chatClient;
+
+
+    private final EmbeddingModel embeddingModel;
+
+    public float[] getEmbedding(String text){
+        return embeddingModel.embed(text);
+    }
 
     public String getJoke(String topic){
 

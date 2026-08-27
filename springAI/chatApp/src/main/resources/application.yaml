@@ -15,6 +15,9 @@ spring:
         options:
           model: gpt-4o-mini
           temperature: 0.8
+      embedding:
+        options:
+          model: text-embedding-3-small
 logging:
   level:
     org.springframework.ai:
