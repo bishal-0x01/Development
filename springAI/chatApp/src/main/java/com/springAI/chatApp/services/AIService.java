@@ -1,5 +1,6 @@
 package com.springAI.chatApp.services;
 
+import com.springAI.chatApp.dto.Joke;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -30,9 +31,10 @@ public class AIService {
                 .advisors(
                         new SimpleLoggerAdvisor()
                 )
-                .call().chatClientResponse();
+                .call()
+                .entity(Joke.class);
 
-        return response.chatResponse().getResult().getOutput().getText();
+        return response.text();
     }
 
 }
