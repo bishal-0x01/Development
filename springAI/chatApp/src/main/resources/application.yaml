@@ -9,7 +9,12 @@ spring:
         options:
           model: llama3.2:1b
 
-
+    openai:
+      api-key: xxxx
+      chat:
+        options:
+          model: gpt-4o-mini
+          temperature: 0.8
 logging:
   level:
     org.springframework.ai:
