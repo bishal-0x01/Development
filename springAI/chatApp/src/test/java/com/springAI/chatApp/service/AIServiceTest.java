@@ -17,7 +17,7 @@ public class AIServiceTest {
 
     @Test
     public void testAskAI(){
-        var response = aiService.askAI("What is Apple?");
+        var response = aiService.askAI("What is Spring AI?");
         System.out.println(response);
     }
 
