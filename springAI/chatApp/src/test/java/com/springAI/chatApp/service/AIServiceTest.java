@@ -14,6 +14,13 @@ public class AIServiceTest {
     @Autowired
     private AIService aiService;
 
+
+    @Test
+    public void testAskAI(){
+        var response = aiService.askAI("What is Apple?");
+        System.out.println(response);
+    }
+
     @Test
     public void testGetJoke(){
         var joke = aiService.getJoke("Cats");
@@ -34,7 +41,7 @@ public class AIServiceTest {
 
     @Test
     public void testStoreData(){
-        aiService.ingestDataToVectorStore("Apple is nice fruit.");
+        aiService.ingestDataToVectorStore();
     }
 
     @Test

@@ -35,10 +35,94 @@ public class AIService {
                 .build());
     }
 
-    public void ingestDataToVectorStore(String text){
+    public String askAI(String prompt){
+        return chatClient.prompt()
+                .user(prompt)
+                .call()
+                .content();
+    }
 
-        Document document = new Document(text);
-        vectorStore.add(List.of(document));
+    public static List<Document> springAIDocs(){
+        return List.of(
+                new Document(
+                        "Spring AI provides abstractions like ChatClient, ChatModel, and EmbeddingModel to interact with LLMs.",
+                        Map.of("topic", "ai")
+                ),
+
+                new Document(
+                        "A VectorStore is used to persist embeddings and perform similarity search for retrieval augmented generation.",
+                        Map.of("topic", "vectorstore")
+                ),
+
+                new Document(
+                        "Retrieval Augmented Generation combines vector similarity search with prompt augmentation to reduce hallucinations and provide context to language models.",
+                        Map.of("topic", "rag")
+                ),
+
+                new Document(
+                        "PgVectorStore stores embeddings inside PostgreSQL using the pgvector extension.",
+                        Map.of("topic", "vectorstore")
+                ),
+
+                new Document(
+                        "ChatClient provides a fluent API to send prompts to language models like OpenAI or Ollama.",
+                        Map.of("topic", "ai")
+                )
+        );
+    }
+
+    public void ingestDataToVectorStore() {
+
+        List<Document> movies = List.of(
+
+                new Document(
+                        "A thief who steals corporate secrets through the use of dream-sharing technology.",
+                        Map.of(
+                                "title", "Inception",
+                                "genre", "Sci-Fi",
+                                "year", "2010"
+                        )
+                ),
+
+                new Document(
+                        "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+                        Map.of(
+                                "title", "Interstellar",
+                                "genre", "Sci-Fi",
+                                "year", "2014"
+                        )
+                ),
+
+                new Document(
+                        "A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom.",
+                        Map.of(
+                                "title", "The Notebook",
+                                "genre", "Romance",
+                                "year", "2004"
+                        )
+                ),
+
+                new Document(
+                        "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+                        Map.of(
+                                "title", "The Matrix",
+                                "genre", "Sci-Fi",
+                                "year", "1999"
+                        )
+                ),
+
+                new Document(
+                        "A young wizard discovers that he is a famous wizard and begins his journey at a magical school.",
+                        Map.of(
+                                "title", "Harry Potter",
+                                "genre", "Fantasy",
+                                "year", "2001"
+                        )
+                )
+        );
+
+        vectorStore.add(movies);
+        vectorStore.add(springAIDocs());
 
     }
 
