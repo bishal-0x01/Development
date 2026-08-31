@@ -17,6 +17,14 @@ public class RAGServiceTest {
         System.out.println(response);
     }
 
+
+    @Test
+    public void testAskAIWithAdvisor(){
+        var response = ragService.askAIWithAdvisor("what is my name?","rohit0x01");
+        System.out.println(response);
+    }
+
+
     @Test
     public void testIngest(){
         ragService.ingestPdfToVectorStore();

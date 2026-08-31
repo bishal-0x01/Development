@@ -3,6 +3,8 @@ package com.springAI.chatApp.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.client.advisor.vectorstore.VectorStoreChatMemoryAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
@@ -31,6 +33,31 @@ public class RAGService {
     @Value("classpath:faq.pdf")
     Resource pdfFile;
 
+
+    public String askAIWithAdvisor(String prompt, String userId){
+
+
+        VectorStoreChatMemoryAdvisor memoryAdvisor =
+                VectorStoreChatMemoryAdvisor.builder(vectorStore)
+                        .defaultTopK(4)
+                        .build();
+
+        return chatClient.prompt()
+                .system("""
+                        You are an AI assistant called Cody.
+                        Greet user with your name (Cody) and the user name if you know their name.
+                        Answer in a friendly, conversational tone.
+                        """)
+                .user(prompt)
+                .advisors(memoryAdvisor)
+                .advisors(a -> a.param(
+                        ChatMemory.CONVERSATION_ID,
+                        userId
+                ))
+                .call()
+                .content();
+
+    }
 
     public String askAI(String prompt){
 
@@ -66,7 +93,7 @@ public class RAGService {
         return chatClient.prompt()
                 .system(systemPrompt)
                 .user(prompt)
-                .advisors(new SimpleLoggerAdvisor())
+                .advisors()
                 .call()
                 .content();
     }
