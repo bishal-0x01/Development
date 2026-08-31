@@ -1,5 +1,6 @@
 package com.springAI.chatApp.services;
 
+import com.springAI.chatApp.advisor.TokenUsageAdvisor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
@@ -65,7 +66,8 @@ public class RAGService {
                         Answer in a friendly, conversational tone.
                         """)
                 .user(prompt)
-                .advisors(safeGuardAdvisor,chatMemoryAdvisor,memoryAdvisor,questionAnswerAdvisor)
+                .advisors(//safeGuardAdvisor,
+                        chatMemoryAdvisor,memoryAdvisor,questionAnswerAdvisor,new TokenUsageAdvisor())
                 .advisors(a -> a.param(
                         ChatMemory.CONVERSATION_ID,
                         userId

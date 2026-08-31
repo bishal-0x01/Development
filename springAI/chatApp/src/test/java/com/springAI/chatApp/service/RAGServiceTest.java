@@ -20,7 +20,7 @@ public class RAGServiceTest {
 
     @Test
     public void testAskAIWithAdvisor(){
-        var response = ragService.askAIWithAdvisor("what are your views on mobile gaming?","bishal0x01");
+        var response = ragService.askAIWithAdvisor("what are your views on mobile phones??","bishal0x01");
         System.out.println(response);
     }
 
