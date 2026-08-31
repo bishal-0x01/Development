@@ -2,6 +2,7 @@ package com.springAI.chatApp.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.client.advisor.vectorstore.VectorStoreChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
@@ -29,6 +30,8 @@ public class RAGService {
     private ChatClient chatClient;
     private final EmbeddingModel embeddingModel;
     private final VectorStore vectorStore;
+    @Autowired
+    private ChatMemory chatMemory;
 
     @Value("classpath:faq.pdf")
     Resource pdfFile;
@@ -41,6 +44,8 @@ public class RAGService {
                 VectorStoreChatMemoryAdvisor.builder(vectorStore)
                         .defaultTopK(4)
                         .build();
+        MessageChatMemoryAdvisor chatMemoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory)
+                .build();
 
         return chatClient.prompt()
                 .system("""
@@ -49,7 +54,7 @@ public class RAGService {
                         Answer in a friendly, conversational tone.
                         """)
                 .user(prompt)
-                .advisors(memoryAdvisor)
+                .advisors(chatMemoryAdvisor,memoryAdvisor)
                 .advisors(a -> a.param(
                         ChatMemory.CONVERSATION_ID,
                         userId
