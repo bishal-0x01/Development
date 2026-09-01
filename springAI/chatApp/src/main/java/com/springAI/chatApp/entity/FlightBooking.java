@@ -11,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.Instant;
 
 @Entity
+@Table(name  = "flight_booking")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
